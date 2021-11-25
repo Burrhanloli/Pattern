@@ -1,57 +1,44 @@
-function print(num) {
-    var maxPatternNum = (num * 2) - 2;
-    var pattern = "-";
-    for (let i = 0; i < num; i++) {
 
-        printPattern(maxPatternNum, pattern);
+const pattern = "-";
+const print = (num) => {
+    var maxPatternNum = (num * 2) - 2;
+    const patternStringArr = []
+    for (let i = 0; i < num; i++) {
         var value = num;
         var loop = (i * 2) + 1;
         var mid = Math.floor(loop / 2);
+        let row = ''
         for (let k = 0; k < loop; k++) {
-            process.stdout.write(value.toString());
+            row = row.concat(value);
             if (k < mid) {
                 value -= 1
             } else {
                 value += 1
             }
             if (k !== loop - 1) {
-                process.stdout.write(pattern);
+                row = row.concat(pattern);
             }
         }
-        printPattern(maxPatternNum, pattern);
+        const finalValue = `${addPattern(maxPatternNum)}${row}${addPattern(maxPatternNum)}`
+        console.log(finalValue);
+        patternStringArr.push(finalValue)
         maxPatternNum = maxPatternNum - 2;
-        console.log('');
     }
-    maxPatternNum = maxPatternNum + 2;
-    for (let i = num - 1; i > 0; i--) {
-        maxPatternNum = maxPatternNum + 2;
-        printPattern(maxPatternNum, pattern);
-        var value = num;
-        var loop = (i * 2) - 1;
-        var mid = Math.floor(loop / 2);
-        for (let k = 0; k < loop; k++) {
-            process.stdout.write(value.toString());
-            if (k < mid) {
-                value -= 1
-            } else {
-                value += 1
-            }
-            if (k !== loop - 1) {
-                process.stdout.write(pattern);
-            }
-        }
-        printPattern(maxPatternNum, pattern);
-        console.log('');
-    }
+    const revPatternStringArr = patternStringArr.reverse();
+    revPatternStringArr.shift();
+    revPatternStringArr.forEach(element => console.log(element));
 }
 
-function printPattern(maxPatternNum, pattern) {
-    for (let j = 1; j <= maxPatternNum; j++) {
-        process.stdout.write(pattern);
+function addPattern(maxPatternNum) {
+    let patternString = ''
+    for (let j = 0; j < maxPatternNum; j++) {
+        patternString = patternString.concat(pattern);
     }
+    return patternString;
 }
 
 print(3);
 print(5);
 print(7);
 print(6);
+print(9);
